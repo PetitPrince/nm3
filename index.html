@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Newton's Manuscript Mystic Manufactorum</title>
+    <link rel="stylesheet" href="https://unpkg.com/normalize.css">
+    <link rel="stylesheet" href="https://unpkg.com/magick.css">
+    <script src="main.js"></script>
+    <style>
+        @font-face {
+            font-family: 'NewtonSansRegular';
+            src: url('newtonsans-2015-11-04.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+
+        }
+
+        pre {
+            white-space: pre-wrap;
+            /* CSS3 */
+            word-wrap: break-word;
+            /* Internet Explorer 5.5+ */
+        }
+
+        textarea,
+        pre,
+        blockquote {
+            background-color: beige;
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <header>
+            <h1>Newton's Manuscript Mystic Manufactorum</h1>
+        </header>
+        <section>
+            <h1>What is that ?</h1>
+            <p>Encode any text using a simple substitution method. By default it uses Newton alchemical symbol. When
+                using the output in for your own usage outside of this page, please
+                install the <a href="https://webapp1.dlib.indiana.edu/newton/reference/font.do">Newton Sans</a> font so
+                that the Zodiacal sign are not transformed into ugly emoji (<span
+                    style="font-family: NewtonSansRegular;">♋</span> instead of ♋)</p>
+            <p>Please note that mutiple word substitution is possible, and that the order have no importance. Case is
+                ignored.</p>
+            <h4>Example:</h4>
+            <p>With this mapping:</p>
+            <pre style="font-family: NewtonSansRegular;">
+{
+    "a": "♁",
+    "b": "♆",
+    "c": "♋",
+    "d": "ʒ",
+    "wizard": "🧙‍♂️",
+    "wizard who shall not be named": "🧛‍♀️"
+}                
+</pre>
+            <p>An this input:</p>
+            <blockquote>I am a wizard. I don't like the wizard who shall not be named.</blockquote>
+            <p>The output will be:</p>
+            <blockquote>i ♁m ♁ 🧙‍♂️. i ʒon't like 🧛‍♀️. he's very me♁n.</blockquote>
+        </section>
+        <section>
+            <h1>Encode your text</h1>
+            <h3><label for="mapping-input">Enter your mapping (JSON)</label></h1>
+                <textarea id="mapping" style="font-family: NewtonSansRegular; width: 90%; min-height:10em;">
+                    {
+                        "a": "♁",
+                        "b": "♆",
+                        "c": "♋",
+                        "d": "ʒ",
+                        "e": "♁",
+                        "f": "☽",
+                        "g": "♊",
+                        "h": "☉",
+                        "i": "",
+                        "j": "♂",
+                        "k": "♋",
+                        "l": "♄",
+                        "m": "☿",
+                        "n": "",
+                        "o": "",
+                        "p": "",
+                        "q": "🝧",
+                        "r": "🜰",
+                        "s": "♐",
+                        "t": "♉",
+                        "u": "□",
+                        "v": "🜋",
+                        "w": "🜄",
+                        "x": "🜊",
+                        "y": "🜖",
+                        "z": "♏"
+                    }
+                                  
+                </textarea>
+                <h3><label for="input">Your text</label></h3>
+                <textarea id="input" name="input"
+                    style="font-family: sans-serif; width: 90%;min-height:20em"></textarea>
+                <h3><label for="output">Output</label></h3>
+                <pre id="output" style="font-family: NewtonSansRegular;"></pre>
+
+
+        </section>
+
+    </main>
+</body>
+
+</html>
