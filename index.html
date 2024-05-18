@@ -6,7 +6,7 @@
     <title>Newton's Manuscript Mystic Manufactorum</title>
     <link rel="stylesheet" href="https://unpkg.com/normalize.css">
     <link rel="stylesheet" href="https://unpkg.com/magick.css">
-    <script src="main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <style>
         @font-face {
             font-family: 'NewtonSansRegular';
@@ -64,51 +64,70 @@
         </section>
         <section>
             <h1>Encode your text</h1>
-            <h3><label for="mapping-input">Enter your mapping (JSON)</label></h1>
-                <textarea id="mapping" style="font-family: NewtonSansRegular; width: 90%; min-height:10em;">
+            <h3><label for="mappingInput">Enter your mapping (JSON)</label></h1>
+                <textarea id="mappingInput" style="font-family: NewtonSansRegular; width: 90%; min-height:10em;">
                     {
-                        "a": "♁",
-                        "b": "♆",
-                        "c": "♋",
-                        "d": "ʒ",
-                        "e": "♁",
-                        "f": "☽",
-                        "g": "♊",
-                        "h": "☉",
-                        "i": "",
-                        "j": "♂",
-                        "k": "♋",
-                        "l": "♄",
-                        "m": "☿",
-                        "n": "",
-                        "o": "",
-                        "p": "",
-                        "q": "🝧",
-                        "r": "🜰",
-                        "s": "♐",
-                        "t": "♉",
-                        "u": "□",
-                        "v": "🜋",
-                        "w": "🜄",
-                        "x": "🜊",
-                        "y": "🜖",
-                        "z": "♏"
+                        "magic": "☾",
+                        "ritual": "♃",
+                        "rituals": "♃",
+                        "spell": "🜍",
+                        "spells": "🜍",
+                        "wizard": "🜄",
+                        "wizards": "🜄",
+                        "candle": "☉",
+                        "candles": "☉",
+                        "energy": "☉",
+                        "energies": "☉",
+                        "water": "🜄",
+                        "waters": "🜄",
+                        "place": "🝏",
+                        "places": "🝏",
+                        "piece": "℞",
+                        "pieces": "℞",
+                        "bowl": "🜊",
+                        "power": "☿",
+                        "space": "℈",
+                        "ingredients": "🜰",
+                        "earth": "♁",
+                        "astral": "🜹",
+                        "a": "ᚪ",
+                        "b": "ᛒ",
+                        "c": "ᚳ",
+                        "d": "ᛞ",
+                        "e": "ᛖ",
+                        "f": "ᚠ",
+                        "g": "ᚷ",
+                        "h": "ᛠ",
+                        "i": "ᛁ",
+                        "j": "ᛡ",
+                        "k": "ᚳ",
+                        "l": "ᛚ",
+                        "m": "ᛗ",
+                        "n": "ᚾ",
+                        "o": "ᚩ",
+                        "p": "ᛈ",
+                        "q": "ᚳ",
+                        "r": "ᚱ",
+                        "s": "ᛋ",
+                        "t": "ᛏ",
+                        "u": "ᚢ",
+                        "v": "ᚹ",
+                        "w": "ᚹᚹ",
+                        "x": "ᛉ",
+                        "y": "ᚣ",
+                        "z": "ᚴ"
                     }
                                   
                 </textarea>
-                <div style="    display: grid;
-                grid-template-columns: 1fr 1fr;">
-                    <div>
-                        <h3><label for="input">Your text</label></h3>
-                        <textarea id="input" name="input"
-                            style="font-size:1em;font-family: sans-serif; width: 90%;min-height:20em"></textarea>
+                <div>
+                    <h3><label for="input">Your text</label></h3>
+                    <textarea id="markdownInput" name="input"
+                        style="font-size:1em;font-family: sans-serif; width: 90%;min-height:20em"></textarea>
+                </div>
 
-                    </div>
-                    <div>
-                        <h3><label for="output">Output</label></h3>
-                        <pre id="output" style="font-family: NewtonSansRegular;"></pre>
-
-                    </div>
+                <div>
+                    <h3><label for="output">Output</label></h3>
+                    <pre id="output" style="font-family: NewtonSansRegular;"></pre>
                 </div>
 
 
@@ -116,5 +135,38 @@
 
     </main>
 </body>
+
+
+<script>
+    document.getElementById('markdownInput').addEventListener('input', updateOutput);
+    document.getElementById('markdownInput').addEventListener('blur', updateOutput);
+    document.getElementById('mappingInput').addEventListener('blur', updateOutput);
+
+    function updateOutput() {
+        const markdownText = document.getElementById('markdownInput').value;
+        let substitutionMap;
+
+        try {
+            substitutionMap = JSON.parse(document.getElementById('mappingInput').value);
+        } catch (e) {
+            substitutionMap = null;
+        }
+
+        let modifiedText = markdownText;
+
+        if (substitutionMap) {
+            // Sort keys by length in descending order
+            const sortedKeys = Object.keys(substitutionMap).sort((a, b) => b.length - a.length);
+
+            for (const key of sortedKeys) {
+                const regex = new RegExp(key, 'gi');
+                modifiedText = modifiedText.replace(regex, substitutionMap[key]);
+            }
+        }
+
+        const html = marked.parse(modifiedText);
+        document.getElementById('output').innerHTML = html;
+    }
+</script>
 
 </html>
